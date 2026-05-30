@@ -1,251 +1,151 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBT Alternatif - Ujian Berbasis Web</title>
-    <style>
-        /* Reset CSS */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            background-color: #f4f6f9;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Portal Ujian - SMPN 4 Tanjung</title>
+<style>
+/* CSS Super Ringkas & Mobile First */
+:root{--p:#0056b3;--bg:#f4f7f6;--t:#333}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);padding:1rem;display:flex;justify-content:center;line-height:1.4}
+.c{width:100%;max-width:480px;background:#fff;padding:1.5rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
+.l{width:55px;height:auto;margin-bottom:.8rem}
+h1{font-size:1.2rem;margin-bottom:.2rem}
+p{font-size:.85rem;color:#666;margin-bottom:1.5rem}
 
-        /* --- HALAMAN PERATURAN (INTRO) --- */
-        #intro-page {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ecf0f1;
-            z-index: 10;
-        }
-        .intro-box {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 90%;
-        }
-        .intro-box h2 {
-            color: #2c3e50;
-            text-align: center;
-            margin-top: 0;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 15px;
-        }
-        .intro-box ul {
-            font-size: 16px;
-            color: #34495e;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        .intro-box li { margin-bottom: 10px; }
-        .highlight { font-weight: bold; color: #e74c3c; }
-        
-        #btn-start {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 18px;
-            cursor: pointer;
-            width: 100%;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        #btn-start:hover { background-color: #2ecc71; }
+.hari{font-weight:700;text-align:left;margin:20px 0 10px;border-bottom:2px solid var(--p);padding-bottom:5px;color:var(--p);font-size:1rem}
+.kartu{display:flex;justify-content:space-between;align-items:center;background:#fafafa;padding:12px 10px;border-radius:6px;margin-bottom:10px;border:1px solid #eee;text-align:left;gap:10px}
+.info{font-size:.85rem;line-height:1.3;flex:1}
+.info strong{display:block;color:#000;margin-bottom:3px}
 
-        /* --- HALAMAN UJIAN (Disembunyikan di awal) --- */
-        #header {
-            display: none; /* Disembunyikan sampai tombol diklik */
-            background-color: #2c3e50;
-            color: white;
-            padding: 15px 30px;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            height: 60px;
-            box-sizing: border-box;
-        }
-        .title { font-size: 18px; font-weight: bold; }
-        .timer-box { font-size: 20px; font-weight: bold; background: #e74c3c; padding: 5px 15px; border-radius: 5px; }
-        .warning-box { font-size: 16px; font-weight: bold; color: #f1c40f; }
+/* Gaya Tombol Ujian */
+.b-ujian{font-size:.85rem;padding:8px 15px;border-radius:6px;background:var(--p);color:#fff;text-decoration:none;text-align:center;font-weight:600;white-space:nowrap;touch-action:manipulation;transition:opacity .2s}
+.b-ujian:active{opacity:.8}
+.b-ujian.kunci{background:#b0bec5;pointer-events:none;color:#fff} /* Warna abu-abu (Belum mulai) */
+.b-ujian.habis{background:#dc3545;pointer-events:none;color:#fff} /* Warna merah (Waktu habis) */
 
-        #iframe-container {
-            display: none; /* Disembunyikan sampai tombol diklik */
-            height: calc(100vh - 60px);
-            width: 100%;
-            background-color: white;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* --- LAYAR BLOKIR --- */
-        #overlay-block {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(44, 62, 80, 0.95);
-            color: white;
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-        #overlay-block h1 { color: #e74c3c; font-size: 3rem; margin-bottom: 10px; }
-        #overlay-block p { font-size: 1.2rem; max-width: 600px; }
-    </style>
+footer{margin-top:2.5rem;font-size:.75rem;color:#888}
+</style>
 </head>
 <body>
 
-    <!-- Halaman Peraturan Ujian -->
-    <div id="intro-page">
-        <div class="intro-box">
-            <h2>KETENTUAN UJIAN ONLINE</h2>
-            <ul>
-                <li>Ujian ini berlangsung selama <span class="highlight" id="teks-durasi">90</span> menit. Timer akan berjalan otomatis setelah tombol ditekan.</li>
-                <li>Sistem <span class="highlight">Anti-Cheat Aktif</span>. Dilarang berpindah tab browser, meminimalkan layar, atau membuka aplikasi lain.</li>
-                <li>Maksimal pelanggaran adalah <span class="highlight" id="teks-pelanggaran">3</span> kali. Lebih dari itu, ujian akan otomatis <strong>DIBLOKIR</strong>.</li>
-                <li>Fungsi <i>klik kanan</i> (Context Menu) dan <i>Keyboard Shortcuts</i> (Copy, Paste, dsb) telah dinonaktifkan.</li>
-                <li>Pastikan koneksi internet Anda stabil sebelum menekan tombol di bawah.</li>
-            </ul>
-            <button id="btn-start" onclick="mulaiUjian()">SAYA MENGERTI & MULAI UJIAN</button>
-        </div>
+<main class="c">
+    <img src="Logo Sekolah (1).jpg" alt="Logo" class="l" loading="lazy" decoding="async">
+    
+    <h1>Portal Ujian STS</h1>
+    <p>Pilih mata pelajaran sesuai jadwal</p>
+    
+    <div class="hari">Selasa, 2 Juni 2026</div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - B. Indonesia</strong>07.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-02T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeP5fV1DHaH49EdzYHaorzFrVxu3AIWZ6Fi6ocD-YQs7WIr5g/closedform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - PAI & BP</strong>09.15 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-02T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdmCxJbfgD6Bf5QcJjdmCW-yS_gPAkg_h8jnaLloBhAwrSegQ/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - B. Indonesia</strong>10.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-02T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf-A7zLeVwa31Gb335csxrL09jGsM7G4INHRy9BW3lj49OG5w/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - PAI & BP</strong>12.15 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-02T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdDp-nrZq7WNJBGqkwG_7HqEKze6ejn4S2k07jMnr_JIqBHzg/viewform">Belum Waktunya</a>
     </div>
 
-    <!-- Bagian Header Ujian -->
-    <div id="header">
-        <div class="title">UJIAN CBT ONLINE</div>
-        <div class="warning-box" id="warning-count">Pelanggaran: 0/3</div>
-        <div class="timer-box" id="timer-display">Waktu: 00:00:00</div>
+    <div class="hari">Rabu, 3 Juni 2026</div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - IPA</strong>07.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-03T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf5yQe47pubfeX5i-_IfL1BgCh7boNhjpoRWF2_NWVnjWM_dA/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - Pend. Pancasila</strong>09.15 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-03T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfoHwdhgo-tBL2pum_4288ld0J-IFSnQ_a0aktZRhcAmxr1_A/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - IPA</strong>10.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-03T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdcV4scfONNxxSxmGCXtunLn72oa3Xht34SF57pzo7WRMNFbA/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - Pend. Pancasila</strong>12.15 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-03T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfOdtNv0Awqv4n4eV9yopQNLGDOBwKZUtaham95mePDhRsRGQ/viewform">Belum Waktunya</a>
     </div>
 
-    <!-- Bagian Google Form -->
-    <div id="iframe-container">
-        <!-- GANTI URL DI BAWAH INI DENGAN LINK GOOGLE FORM ANDA -->
-        <iframe id="gform" src="https://docs.google.com/forms/d/e/1FAIpQLSe9rAmWkQIZKM7uPNITOv5L9eBBzVeBDP5jk5dLtSERWMsyPw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Memuat Ujian...</iframe>
+    <div class="hari">Kamis, 4 Juni 2026</div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - B. Inggris</strong>07.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-04T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSd30g-JedAyrnojfKV9oT8QYMilUBql9NVGudrtcU7dgZxA1A/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - IPS</strong>09.15 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-04T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLScb8ssnko3R9wzdv4MzZHp_8_l378hCDOEENkpKzNeImbVcDA/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - B. Inggris</strong>10.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-04T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfZF4kauTXPsK9ZcN6NtkBQpfgihBjL4nZktjZSbItG5zGNmA/viewform">Belum Waktunya</a>
+    </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - IPS</strong>12.15 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-04T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSc95BHzNvlqeBw5GtIH7IEu-4HKbgw9F8gMwUr7E7-c24SrjA/viewform">Belum Waktunya</a>
     </div>
 
-    <!-- Layar Pemblokiran -->
-    <div id="overlay-block">
-        <h1 id="block-title">UJIAN DIHENTIKAN</h1>
-        <p id="block-msg">Waktu Anda telah habis atau sistem mendeteksi aktivitas yang tidak diizinkan.</p>
+    <div class="hari">Jumat, 5 Juni 2026</div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 7 - Matematika</strong>07.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-05T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSedBz_T2DPpzQ7kGVJrYI16F-4Q2yPhGw_niUxV7Vf4csvtYQ/viewform">Belum Waktunya</a>
     </div>
+    <div class="kartu">
+        <div class="info"><strong>Kelas 8 - Matematika</strong>10.45 WITA (80 Menit)</div>
+        <a href="#" class="b-ujian kunci" data-time="2026-06-05T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeGpqnvQQSiUg0vsMe94FssTq3HiO1KpblMIk5p-6m-N26mWg/viewform">Belum Waktunya</a>
+    </div>
+    
+    <footer>&copy; 2026 SMPN 4 Tanjung</footer>
+</main>
 
-    <script>
-        // --- KONFIGURASI UTAMA ---
-        const durasiUjian = 90; // Atur durasi dalam menit
-        const batasPelanggaran = 3; // Maksimal pindah tab sebelum diblokir
-        
-        // Update teks di halaman intro sesuai konfigurasi
-        document.getElementById('teks-durasi').innerText = durasiUjian;
-        document.getElementById('teks-pelanggaran').innerText = batasPelanggaran;
-        document.getElementById('warning-count').innerText = `Pelanggaran: 0/${batasPelanggaran}`;
+<script>
+function cekWaktuUjian() {
+    const waktuSekarang = new Date(); // Waktu saat ini di HP siswa
+    const tombolUjian = document.querySelectorAll('.b-ujian');
 
-        let waktuDetik = durasiUjian * 60;
-        let jumlahPelanggaran = 0;
-        let ujianAktif = false; // Status awal FALSE agar anti-cheat belum menyala di layar intro
-        let intervalTimer;
+    // Menetapkan durasi ujian: 80 menit (dalam format milidetik)
+    // 80 menit * 60 detik * 1000 milidetik = 4.800.000
+    const durasiUjian = 80 * 60 * 1000; 
 
-        // --- FUNGSI MULAI UJIAN (Terpicu saat tombol diklik) ---
-        function mulaiUjian() {
-            // Sembunyikan intro, tampilkan antarmuka ujian
-            document.getElementById('intro-page').style.display = 'none';
-            document.getElementById('header').style.display = 'flex';
-            document.getElementById('iframe-container').style.display = 'block';
-            
-            ujianAktif = true; // Aktifkan sistem ujian
-            jalankanTimer();
+    tombolUjian.forEach(tombol => {
+        // Mengambil waktu mulai dari atribut HTML
+        const waktuMulai = new Date(tombol.getAttribute('data-time'));
+        // Menghitung waktu selesai (waktu mulai + 80 menit)
+        const waktuSelesai = new Date(waktuMulai.getTime() + durasiUjian);
+        const tautanForm = tombol.getAttribute('data-link');
+
+        // KONDISI 1: Jika waktu sekarang belum mencapai waktu mulai
+        if (waktuSekarang < waktuMulai) {
+            tombol.removeAttribute('href');
+            tombol.className = 'b-ujian kunci';
+            tombol.innerHTML = 'Belum Waktunya';
+        } 
+        // KONDISI 2: Jika berada di rentang waktu ujian (Sedang berlangsung)
+        else if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
+            tombol.href = tautanForm;
+            tombol.className = 'b-ujian'; 
+            tombol.innerHTML = 'Mulai';
+        } 
+        // KONDISI 3: Jika waktu sudah melewati batas waktu ujian
+        else {
+            tombol.removeAttribute('href');
+            tombol.className = 'b-ujian habis'; 
+            tombol.innerHTML = 'Waktu Habis';
         }
+    });
+}
 
-        // --- FITUR TIMER ---
-        function jalankanTimer() {
-            const timerElement = document.getElementById('timer-display');
-            
-            intervalTimer = setInterval(() => {
-                if (!ujianAktif) return;
-                
-                waktuDetik--;
-                
-                let jam = Math.floor(waktuDetik / 3600);
-                let menit = Math.floor((waktuDetik % 3600) / 60);
-                let detik = waktuDetik % 60;
-                
-                jam = jam < 10 ? '0' + jam : jam;
-                menit = menit < 10 ? '0' + menit : menit;
-                detik = detik < 10 ? '0' + detik : detik;
-                
-                timerElement.innerText = `Waktu: ${jam}:${menit}:${detik}`;
-                
-                if (waktuDetik <= 0) {
-                    clearInterval(intervalTimer);
-                    blokirUjian("WAKTU HABIS", "Waktu pengerjaan ujian Anda telah selesai. Silakan hubungi pengawas.");
-                }
-            }, 1000);
-        }
+// Menjalankan pengecekan pertama kali
+cekWaktuUjian();
 
-        // --- FITUR ANTI-CHEAT ---
-        // A. Deteksi Pindah Tab (Hanya menghitung jika 'ujianAktif' bernilai true)
-        document.addEventListener("visibilitychange", () => {
-            if (document.visibilityState === 'hidden' && ujianAktif) {
-                tindakPelanggaran();
-            }
-        });
+// Mengulang pengecekan setiap 10 detik secara otomatis di latar belakang
+setInterval(cekWaktuUjian, 10000);
+</script>
 
-        // B. Mematikan Klik Kanan
-        document.addEventListener('contextmenu', (e) => {
-            if (ujianAktif) {
-                e.preventDefault();
-                alert("Fitur klik kanan dinonaktifkan selama ujian!");
-            }
-        });
-
-        // C. Mematikan Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (ujianAktif) {
-                if (e.key === "F12" || 
-                   (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j")) || 
-                   (e.ctrlKey && (e.key === "U" || e.key === "u" || e.key === "C" || e.key === "c" || e.key === "V" || e.key === "v"))) {
-                    e.preventDefault();
-                    alert("Shortcut dilarang saat ujian!");
-                }
-            }
-        });
-
-        // Fungsi Menangani Pelanggaran
-        function tindakPelanggaran() {
-            jumlahPelanggaran++;
-            document.getElementById('warning-count').innerText = `Pelanggaran: ${jumlahPelanggaran}/${batasPelanggaran}`;
-            
-            if (jumlahPelanggaran >= batasPelanggaran) {
-                blokirUjian("UJIAN DIBLOKIR", "Anda terdeteksi terlalu sering keluar dari halaman ujian. Akses ditutup.");
-            } else {
-                alert(`PERINGATAN ${jumlahPelanggaran} DARI ${batasPelanggaran}!\nAnda terdeteksi meninggalkan halaman ujian. Jangan pindah tab atau membuka aplikasi lain!`);
-            }
-        }
-
-        // Fungsi Memblokir Ujian
-        function blokirUjian(judul, pesan) {
-            ujianAktif = false;
-            document.getElementById('header').style.display = 'none';
-            document.getElementById('iframe-container').style.display = 'none';
-            document.getElementById('overlay-block').style.display = 'flex';
-            document.getElementById('block-title').innerText = judul;
-            document.getElementById('block-msg').innerText = pesan;
-        }
-    </script>
 </body>
 </html>
