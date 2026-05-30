@@ -244,4 +244,87 @@ footer {
                 <span class="class-subject">Kelas 7 - B. Inggris</span>
                 <span class="time-duration">07.45 WITA (80 Menit)</span>
             </div>
-            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSd30g-JedAyrnojfKV9oT8QYMilUBql9NVGudrtcU7dgZxA1A/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - IPS</span>
+                <span class="time-duration">09.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLScb8ssnko3R9wzdv4MzZHp_8_l378hCDOEENkpKzNeImbVcDA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - B. Inggris</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfZF4kauTXPsK9ZcN6NtkBQpfgihBjL4nZktjZSbItG5zGNmA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - IPS</span>
+                <span class="time-duration">12.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSc95BHzNvlqeBw5GtIH7IEu-4HKbgw9F8gMwUr7E7-c24SrjA/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+
+    <div class="day-group">
+        <h2 class="day-title">Jumat, 5 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - Matematika</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-05T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSedBz_T2DPpzQ7kGVJrYI16F-4Q2yPhGw_niUxV7Vf4csvtYQ/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - Matematika</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-05T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeGpqnvQQSiUg0vsMe94FssTq3HiO1KpblMIk5p-6m-N26mWg/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+    
+    <footer>&copy; 2026 SMPN 4 Tanjung</footer>
+</main>
+
+<script>
+function cekWaktuUjian() {
+    const waktuSekarang = new Date(); 
+    // Hanya memproses tombol dengan class .b-ujian
+    const tombolUjian = document.querySelectorAll('.b-ujian');
+    const durasiUjian = 80 * 60 * 1000; 
+
+    tombolUjian.forEach(tombol => {
+        const waktuMulai = new Date(tombol.getAttribute('data-time'));
+        const waktuSelesai = new Date(waktuMulai.getTime() + durasiUjian);
+        const tautanForm = tombol.getAttribute('data-link');
+
+        if (waktuSekarang < waktuMulai) {
+            tombol.removeAttribute('href');
+            tombol.className = 'b-start b-ujian kunci';
+            tombol.innerHTML = 'Belum Waktunya';
+        } 
+        else if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
+            tombol.href = tautanForm;
+            tombol.className = 'b-start b-ujian'; 
+            tombol.innerHTML = 'Mulai Ujian';
+            // Menambahkan target agar link terbuka di tab/jendela baru
+            tombol.setAttribute('target', '_blank'); 
+        } 
+        else {
+            tombol.removeAttribute('href');
+            tombol.className = 'b-start b-ujian habis'; 
+            tombol.innerHTML = 'Waktu Habis';
+        }
+    });
+}
+
+cekWaktuUjian();
+setInterval(cekWaktuUjian, 10000);
+</script>
+
+</body>
+</html>
