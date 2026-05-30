@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>portal CBT SMAPAT - SMPN 4 Tanjung</title>
+<title>Portal CBT - SMPN 4 Tanjung</title>
 <style>
 /* CSS Modern, Ringan, Mobile-First */
 :root {
-  /* Palet warna terinspirasi logo */
   --primary-blue: #0747a6; 
   --text-main: #1f2937;
   --text-muted: #6b7280;
-  --bg-page: #f0f4f8; /* Abu-abu kebiruan sangat terang */
+  --bg-page: #f0f4f8; 
   --bg-card: #ffffff;
   --status-locked: #94a3b8;
-  --status-ended: #dc2626; /* Merah untuk waktu habis */
+  --status-ended: #dc2626; 
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,7 +39,6 @@ body {
   text-align: center;
 }
 
-/* Header Section */
 .header {
   margin-bottom: 1.8rem;
   border-bottom: 1px solid #e5e7eb;
@@ -48,7 +46,7 @@ body {
 }
 
 .school-logo {
-  width: 60px; /* Ukuran proporsional di HP */
+  width: 60px; 
   height: auto;
   margin-bottom: 0.8rem;
 }
@@ -66,7 +64,6 @@ h1 {
   color: var(--text-muted);
 }
 
-/* Exam Day Groupings */
 .day-group {
   margin-bottom: 1.5rem;
   text-align: left;
@@ -83,7 +80,6 @@ h2.day-title {
   margin-bottom: 12px;
 }
 
-/* Individual Exam Cards */
 .exam-card {
   background: var(--bg-card);
   padding: 1rem;
@@ -97,7 +93,6 @@ h2.day-title {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Efek tactile saat kartu ditekan di HP */
 .exam-card:active {
   transform: scale(0.98);
   box-shadow: 0 1px 3px rgba(0,0,0,0.03);
@@ -121,7 +116,7 @@ h2.day-title {
   color: var(--text-muted);
 }
 
-/* Button Styling */
+/* Tombol Ujian Utama */
 .b-start {
   font-size: 0.85rem;
   padding: 10px 18px;
@@ -131,28 +126,22 @@ h2.day-title {
   text-decoration: none;
   font-weight: 600;
   white-space: nowrap;
-  touch-action: manipulation; /* Optimasi touch screen */
+  touch-action: manipulation;
   transition: background 0.2s;
   border: none;
-  cursor: pointer;
+  text-align: center;
 }
 
-/* Interaksi Button */
-.b-start:active {
-  background: #063c8a;
-}
+.b-start:active { background: #063c8a; }
+.b-start.kunci { background: var(--status-locked); pointer-events: none; opacity: 0.9; }
+.b-start.habis { background: var(--status-ended); pointer-events: none; }
 
-/* Warna tombol status dikunci (belum waktunya) */
-.b-start.kunci {
-  background: var(--status-locked);
-  pointer-events: none; /* Nonaktifkan klik */
-  opacity: 0.9;
+/* Tombol Khusus Simulasi */
+.b-simulasi {
+  background: #10b981; /* Warna hijau */
 }
-
-/* Warna tombol status habis */
-.b-start.habis {
-  background: var(--status-ended);
-  pointer-events: none;
+.b-simulasi:active {
+  background: #059669;
 }
 
 footer {
@@ -168,4 +157,91 @@ footer {
 
 <main class="portal-container">
     <header class="header">
-        <img src="data:image/png;base64,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:{type:
+        <img src="Logo Sekolah (1).jpg" alt="Logo SMPN 4 Tanjung" class="school-logo" loading="lazy" decoding="async">
+        <h1>Portal Ujian STS</h1>
+        <div class="sub-header">Pilih mata pelajaran sesuai jadwal</div>
+    </header>
+
+    <div class="day-group">
+        <h2 class="day-title" style="background:#dcfce7; color:#166534;">Tahap Persiapan</h2>
+        <div class="exam-card" style="border-left: 4px solid #10b981;">
+            <div class="info">
+                <span class="class-subject">Simulasi CBT</span>
+                <span class="time-duration">Latihan Mandiri • Terbuka</span>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeXJn-omfcStauT5kGWeYkOriiu6FnN7EPvLb8H6k4fw_dBg/viewform?usp=sharing&ouid=103394037725807125091" class="b-start b-simulasi" target="_blank">Simulasi</a>
+        </div>
+    </div>
+    
+    <div class="day-group">
+        <h2 class="day-title">Selasa, 2 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - B. Indonesia</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeP5fV1DHaH49EdzYHaorzFrVxu3AIWZ6Fi6ocD-YQs7WIr5g/closedform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - PAI & BP</span>
+                <span class="time-duration">09.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdmCxJbfgD6Bf5QcJjdmCW-yS_gPAkg_h8jnaLloBhAwrSegQ/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - B. Indonesia</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf-A7zLeVwa31Gb335csxrL09jGsM7G4INHRy9BW3lj49OG5w/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - PAI & BP</span>
+                <span class="time-duration">12.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdDp-nrZq7WNJBGqkwG_7HqEKze6ejn4S2k07jMnr_JIqBHzg/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+
+    <div class="day-group">
+        <h2 class="day-title">Rabu, 3 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - IPA</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf5yQe47pubfeX5i-_IfL1BgCh7boNhjpoRWF2_NWVnjWM_dA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - Pend. Pancasila</span>
+                <span class="time-duration">09.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfoHwdhgo-tBL2pum_4288ld0J-IFSnQ_a0aktZRhcAmxr1_A/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - IPA</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdcV4scfONNxxSxmGCXtunLn72oa3Xht34SF57pzo7WRMNFbA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - Pend. Pancasila</span>
+                <span class="time-duration">12.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfOdtNv0Awqv4n4eV9yopQNLGDOBwKZUtaham95mePDhRsRGQ/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+
+    <div class="day-group">
+        <h2 class="day-title">Kamis, 4 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - B. Inggris</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-
