@@ -26,6 +26,9 @@ body {
   display: flex;
   justify-content: center;
   line-height: 1.4;
+  /* Mencegah siswa menyeleksi teks di portal */
+  user-select: none; 
+  -webkit-user-select: none;
 }
 
 .portal-container {
@@ -38,7 +41,6 @@ body {
   text-align: center;
 }
 
-/* Header Tanpa Logo */
 .header {
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #e5e7eb;
@@ -56,6 +58,28 @@ h1 {
 .sub-header {
   font-size: 0.85rem;
   color: var(--text-muted);
+}
+
+/* Banner Anti-Cheat */
+.anti-cheat {
+  display: none; /* Disembunyikan secara default, muncul saat ujian aktif */
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #f87171;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: left;
+  line-height: 1.4;
+  animation: kedip 2s infinite;
+}
+
+@keyframes kedip {
+  0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(248, 113, 113, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); }
 }
 
 .day-group {
@@ -104,7 +128,6 @@ h2.day-title {
   color: var(--text-muted);
 }
 
-/* Tombol */
 .b-start {
   font-size: 0.8rem;
   padding: 8px 14px;
@@ -121,8 +144,6 @@ h2.day-title {
 
 .b-start.kunci { background: var(--status-locked); pointer-events: none; }
 .b-start.habis { background: var(--status-ended); pointer-events: none; }
-
-/* Tombol Khusus Simulasi */
 .b-simulasi { background: #10b981; }
 
 footer {
@@ -138,9 +159,13 @@ footer {
 
 <main class="portal-container">
     <header class="header">
-        <h1>Portal CBT SMAPAT</h1>
+        <h1>Portal CBT STS</h1>
         <div class="sub-header">Pilih mata pelajaran sesuai jadwal</div>
     </header>
+
+    <div id="anti-cheat" class="anti-cheat">
+        ⚠️ PERINGATAN: Sistem pemantauan aktif. Dilarang membuka tab, aplikasi lain, atau menyontek selama ujian berlangsung!
+    </div>
 
     <div class="day-group">
         <h2 class="day-title" style="background:#dcfce7; color:#166534;">Tahap Persiapan</h2>
@@ -271,10 +296,13 @@ footer {
 </main>
 
 <script>
+// PENGATURAN WAKTU DAN TIMER LIVE
 function cekWaktuUjian() {
     const waktuSekarang = new Date(); 
     const tombolUjian = document.querySelectorAll('.b-ujian');
+    const panelAntiCheat = document.getElementById('anti-cheat');
     const durasiUjian = 80 * 60 * 1000; 
+    let adaUjianBerlangsung = false;
 
     tombolUjian.forEach(tombol => {
         const waktuMulai = new Date(tombol.getAttribute('data-time'));
@@ -287,9 +315,20 @@ function cekWaktuUjian() {
             tombol.innerHTML = 'Belum Waktunya';
         } 
         else if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
+            adaUjianBerlangsung = true;
             tombol.href = tautanForm;
             tombol.className = 'b-start b-ujian'; 
-            tombol.innerHTML = 'Mulai Ujian';
+            
+            // HITUNG MUNDUR (COUNTDOWN)
+            const sisaMs = waktuSelesai - waktuSekarang;
+            const menit = Math.floor(sisaMs / 60000);
+            const detik = Math.floor((sisaMs % 60000) / 1000);
+            
+            // Format angka agar selalu 2 digit (misal: 09, bukan 9)
+            const formatDetik = detik.toString().padStart(2, '0');
+            
+            // Menampilkan Timer di dalam tombol
+            tombol.innerHTML = `Sisa ${menit}:${formatDetik}`;
             tombol.setAttribute('target', '_blank'); 
         } 
         else {
@@ -298,10 +337,28 @@ function cekWaktuUjian() {
             tombol.innerHTML = 'Waktu Habis';
         }
     });
+
+    // Menampilkan Banner Anti-Cheat HANYA JIKA ujian sedang berlangsung
+    if(adaUjianBerlangsung) {
+        panelAntiCheat.style.display = 'block';
+    } else {
+        panelAntiCheat.style.display = 'none';
+    }
 }
 
+// Menjalankan pengecekan pertama kali
 cekWaktuUjian();
-setInterval(cekWaktuUjian, 10000);
+
+// MENGULANG PENGECEKAN SETIAP 1 DETIK agar Timer Live Berjalan
+setInterval(cekWaktuUjian, 1000);
+
+// KEAMANAN TAMBAHAN (Mencegah Klik Kanan & Copy)
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+document.addEventListener('copy', function(e) {
+  e.preventDefault();
+});
 </script>
 
 </body>
