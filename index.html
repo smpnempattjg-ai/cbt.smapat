@@ -3,130 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>Portal Ujian - SMPN 4 Tanjung</title>
+<title>portal CBT SMAPAT - SMPN 4 Tanjung</title>
 <style>
-/* CSS Super Ringkas Tanpa Logo */
-:root{--p:#0056b3;--bg:#f4f7f6;--t:#333}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);padding:1rem;display:flex;justify-content:center;line-height:1.4}
-.c{width:100%;max-width:480px;background:#fff;padding:1.5rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
-h1{font-size:1.4rem;margin-bottom:.2rem;color:var(--p)} /* Ukuran judul sedikit dibesarkan sebagai ganti logo */
-p{font-size:.85rem;color:#666;margin-bottom:1.5rem}
+/* CSS Modern, Ringan, Mobile-First */
+:root {
+  /* Palet warna terinspirasi logo */
+  --primary-blue: #0747a6; 
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --bg-page: #f0f4f8; /* Abu-abu kebiruan sangat terang */
+  --bg-card: #ffffff;
+  --status-locked: #94a3b8;
+  --status-ended: #dc2626; /* Merah untuk waktu habis */
+}
 
-.hari{font-weight:700;text-align:left;margin:20px 0 10px;border-bottom:2px solid var(--p);padding-bottom:5px;color:var(--p);font-size:1rem}
-.kartu{display:flex;justify-content:space-between;align-items:center;background:#fafafa;padding:12px 10px;border-radius:6px;margin-bottom:10px;border:1px solid #eee;text-align:left;gap:10px}
-.info{font-size:.85rem;line-height:1.3;flex:1}
-.info strong{display:block;color:#000;margin-bottom:3px}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-.b-ujian{font-size:.85rem;padding:8px 15px;border-radius:6px;background:var(--p);color:#fff;text-decoration:none;text-align:center;font-weight:600;white-space:nowrap;touch-action:manipulation;transition:opacity .2s}
-.b-ujian:active{opacity:.8}
-.b-ujian.kunci{background:#b0bec5;pointer-events:none;color:#fff} 
-.b-ujian.habis{background:#dc3545;pointer-events:none;color:#fff} 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-page);
+  color: var(--text-main);
+  padding: 1.2rem;
+  display: flex;
+  justify-content: center;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
 
-footer{margin-top:2.5rem;font-size:.75rem;color:#888}
+.portal-container {
+  width: 100%;
+  max-width: 460px;
+  background: var(--bg-card);
+  padding: 2rem 1.2rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.04);
+  text-align: center;
+}
+
+/* Header Section */
+.header {
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1.5rem;
+}
+
+.school-logo {
+  width: 60px; /* Ukuran proporsional di HP */
+  height: auto;
+  margin-bottom: 0.8rem;
+}
+
+h1 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 0.1rem;
+  color: #111827;
+  letter-spacing: -0.5px;
+}
+
+.sub-header {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Exam Day Groupings */
+.day-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+h2.day-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  background: #e0e9f6;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+/* Individual Exam Cards */
+.exam-card {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Efek tactile saat kartu ditekan di HP */
+.exam-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.class-subject {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+.time-duration {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Button Styling */
+.b-start {
+  font-size: 0.85rem;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--primary-blue);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  touch-action: manipulation; /* Optimasi touch screen */
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+/* Interaksi Button */
+.b-start:active {
+  background: #063c8a;
+}
+
+/* Warna tombol status dikunci (belum waktunya) */
+.b-start.kunci {
+  background: var(--status-locked);
+  pointer-events: none; /* Nonaktifkan klik */
+  opacity: 0.9;
+}
+
+/* Warna tombol status habis */
+.b-start.habis {
+  background: var(--status-ended);
+  pointer-events: none;
+}
+
+footer {
+  margin-top: 2.5rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+}
 </style>
 </head>
 <body>
 
-<main class="c">
-    <h1>Portal Ujian STS</h1>
-    <p>Pilih mata pelajaran sesuai jadwal</p>
-    
-    <div class="hari">Selasa, 2 Juni 2026</div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - B. Indonesia</strong>07.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-02T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeP5fV1DHaH49EdzYHaorzFrVxu3AIWZ6Fi6ocD-YQs7WIr5g/closedform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - PAI & BP</strong>09.15 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-02T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdmCxJbfgD6Bf5QcJjdmCW-yS_gPAkg_h8jnaLloBhAwrSegQ/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - B. Indonesia</strong>10.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-02T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf-A7zLeVwa31Gb335csxrL09jGsM7G4INHRy9BW3lj49OG5w/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - PAI & BP</strong>12.15 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-02T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdDp-nrZq7WNJBGqkwG_7HqEKze6ejn4S2k07jMnr_JIqBHzg/viewform">Belum Waktunya</a>
-    </div>
-
-    <div class="hari">Rabu, 3 Juni 2026</div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - IPA</strong>07.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-03T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf5yQe47pubfeX5i-_IfL1BgCh7boNhjpoRWF2_NWVnjWM_dA/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - Pend. Pancasila</strong>09.15 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-03T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfoHwdhgo-tBL2pum_4288ld0J-IFSnQ_a0aktZRhcAmxr1_A/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - IPA</strong>10.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-03T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdcV4scfONNxxSxmGCXtunLn72oa3Xht34SF57pzo7WRMNFbA/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - Pend. Pancasila</strong>12.15 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-03T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfOdtNv0Awqv4n4eV9yopQNLGDOBwKZUtaham95mePDhRsRGQ/viewform">Belum Waktunya</a>
-    </div>
-
-    <div class="hari">Kamis, 4 Juni 2026</div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - B. Inggris</strong>07.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-04T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSd30g-JedAyrnojfKV9oT8QYMilUBql9NVGudrtcU7dgZxA1A/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - IPS</strong>09.15 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-04T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLScb8ssnko3R9wzdv4MzZHp_8_l378hCDOEENkpKzNeImbVcDA/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - B. Inggris</strong>10.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-04T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfZF4kauTXPsK9ZcN6NtkBQpfgihBjL4nZktjZSbItG5zGNmA/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - IPS</strong>12.15 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-04T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSc95BHzNvlqeBw5GtIH7IEu-4HKbgw9F8gMwUr7E7-c24SrjA/viewform">Belum Waktunya</a>
-    </div>
-
-    <div class="hari">Jumat, 5 Juni 2026</div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 7 - Matematika</strong>07.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-05T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSedBz_T2DPpzQ7kGVJrYI16F-4Q2yPhGw_niUxV7Vf4csvtYQ/viewform">Belum Waktunya</a>
-    </div>
-    <div class="kartu">
-        <div class="info"><strong>Kelas 8 - Matematika</strong>10.45 WITA (80 Menit)</div>
-        <a href="#" class="b-ujian kunci" data-time="2026-06-05T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeGpqnvQQSiUg0vsMe94FssTq3HiO1KpblMIk5p-6m-N26mWg/viewform">Belum Waktunya</a>
-    </div>
-    
-    <footer>&copy; 2026 SMPN 4 Tanjung</footer>
-</main>
-
-<script>
-function cekWaktuUjian() {
-    const waktuSekarang = new Date(); 
-    const tombolUjian = document.querySelectorAll('.b-ujian');
-    const durasiUjian = 80 * 60 * 1000; 
-
-    tombolUjian.forEach(tombol => {
-        const waktuMulai = new Date(tombol.getAttribute('data-time'));
-        const waktuSelesai = new Date(waktuMulai.getTime() + durasiUjian);
-        const tautanForm = tombol.getAttribute('data-link');
-
-        if (waktuSekarang < waktuMulai) {
-            tombol.removeAttribute('href');
-            tombol.className = 'b-ujian kunci';
-            tombol.innerHTML = 'Belum Waktunya';
-        } 
-        else if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
-            tombol.href = tautanForm;
-            tombol.className = 'b-ujian'; 
-            tombol.innerHTML = 'Mulai';
-        } 
-        else {
-            tombol.removeAttribute('href');
-            tombol.className = 'b-ujian habis'; 
-            tombol.innerHTML = 'Waktu Habis';
-        }
-    });
-}
-
-cekWaktuUjian();
-setInterval(cekWaktuUjian, 1000
+<main class="portal-container">
+    <header class="header">
+        <img src="data:image/png;base64,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:{type:
