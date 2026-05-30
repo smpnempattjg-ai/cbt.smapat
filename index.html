@@ -1,41 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>Portal SMPN 4 Tanjung</title>
-<style>
-/* CSS Super Ringkas */
-:root{--p:#0056b3;--bg:#f4f7f6;--t:#333}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);padding:1rem;display:flex;justify-content:center;line-height:1.4}
-.c{width:100%;max-width:400px;background:#fff;padding:1.5rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
-.l{width:55px;height:auto;margin-bottom:.8rem} /* Ukuran logo diperkecil menjadi 55px */
-h1{font-size:1.2rem;margin-bottom:.2rem}
-p{font-size:.85rem;color:#666;margin-bottom:1.5rem}
-.b-grp{display:flex;flex-direction:column;gap:10px}
-.b{display:block;width:100%;padding:12px;background:var(--p);color:#fff;text-decoration:none;border-radius:6px;font-weight:700;font-size:.95rem;touch-action:manipulation}
-.b:active{opacity:.8}
-.b-o{background:transparent;color:var(--p);border:1px solid var(--p)}
-footer{margin-top:2rem;font-size:.75rem;color:#888}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portal Aplikasi - SMPN 4 Tanjung</title>
+    <meta name="description" content="Portal aplikasi ringan untuk akses cepat via mobile">
+
+    <style>
+        /* CSS Internal: Menghindari browser men-download file CSS terpisah (menghemat request) */
+        :root {
+            --primary: #0056b3;
+            --bg: #f4f7f6;
+            --text: #333;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            /* Menggunakan font bawaan sistem HP (tanpa download Google Fonts) */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px; /* Membatasi lebar maksimal seukuran HP pada umumnya */
+            background: #fff;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .logo {
+            width: 90px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        h1 { 
+            font-size: 1.4rem; 
+            margin-bottom: 0.3rem; 
+        }
+
+        p { 
+            font-size: 0.9rem; 
+            color: #666; 
+            margin-bottom: 2rem; 
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+            /* Memastikan tombol nyaman ditekan dengan jari (touch target) */
+            touch-action: manipulation;
+        }
+
+        .btn:active { opacity: 0.8; }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        footer {
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
 
-<main class="c">
-    <img src="Logo Sekolah (1).jpg" alt="Logo" class="l" loading="lazy" decoding="async">
-    
-    <h1>Portal Layanan</h1>
-    <p>Akses cepat SMPN 4 Tanjung</p>
-    
-    <div class="b-grp">
-        <a href="#" class="b">Presensi Digital</a>
-        <a href="#" class="b">Jadwal SPMB 2026/2027</a>
-        <a href="#" class="b">Sistem RASS & ATS</a>
-        <a href="#" class="b b-o">Akses Google Workspace</a>
+<main class="container">
+    <img src="Logo Sekolah (1).jpg" alt="Logo SMPN 4 Tanjung" class="logo" loading="lazy">
+
+    <h1>Portal Layanan Terpadu</h1>
+    <p>Akses cepat administrasi dan akademik.</p>
+
+    <div class="btn-group">
+        <a href="#" class="btn">Presensi Siswa & Guru</a>
+        <a href="#" class="btn">Ujian & Sumatif (STS)</a>
+        <a href="#" class="btn">Program RASS & ATS</a>
+        <a href="#" class="btn btn-outline">Pengumuman SPMB</a>
     </div>
-    
-    <footer>&copy; 2026 SMPN 4 Tanjung</footer>
+
+    <footer>
+        &copy; 2026 SMPN 4 Tanjung.<br>Akses Cepat Mobile.
+    </footer>
 </main>
 
 </body>
