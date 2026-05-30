@@ -64,4 +64,245 @@ h1 {
 }
 
 h2.day-title {
-  font-size: 0.9
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  background: #e0e9f6;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.exam-card {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.class-subject {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+.time-duration {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Tombol */
+.b-start {
+  font-size: 0.8rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--primary-blue);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  touch-action: manipulation;
+  border: none;
+  text-align: center;
+}
+
+.b-start.kunci { background: var(--status-locked); pointer-events: none; }
+.b-start.habis { background: var(--status-ended); pointer-events: none; }
+
+/* Tombol Khusus Simulasi */
+.b-simulasi { background: #10b981; }
+
+footer {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+}
+</style>
+</head>
+<body>
+
+<main class="portal-container">
+    <header class="header">
+        <h1>Portal CBT STS</h1>
+        <div class="sub-header">Pilih mata pelajaran sesuai jadwal</div>
+    </header>
+
+    <div class="day-group">
+        <h2 class="day-title" style="background:#dcfce7; color:#166534;">Tahap Persiapan</h2>
+        <div class="exam-card" style="border-left: 4px solid #10b981;">
+            <div class="info">
+                <span class="class-subject">Simulasi CBT</span>
+                <span class="time-duration">Latihan Mandiri • Terbuka</span>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeXJn-omfcStauT5kGWeYkOriiu6FnN7EPvLb8H6k4fw_dBg/viewform?usp=sharing&ouid=103394037725807125091" class="b-start b-simulasi" target="_blank">Simulasi</a>
+        </div>
+    </div>
+    
+    <div class="day-group">
+        <h2 class="day-title">Selasa, 2 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - B. Indonesia</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeP5fV1DHaH49EdzYHaorzFrVxu3AIWZ6Fi6ocD-YQs7WIr5g/closedform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - PAI & BP</span>
+                <span class="time-duration">09.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdmCxJbfgD6Bf5QcJjdmCW-yS_gPAkg_h8jnaLloBhAwrSegQ/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - B. Indonesia</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf-A7zLeVwa31Gb335csxrL09jGsM7G4INHRy9BW3lj49OG5w/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - PAI & BP</span>
+                <span class="time-duration">12.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-02T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdDp-nrZq7WNJBGqkwG_7HqEKze6ejn4S2k07jMnr_JIqBHzg/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+
+    <div class="day-group">
+        <h2 class="day-title">Rabu, 3 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - IPA</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSf5yQe47pubfeX5i-_IfL1BgCh7boNhjpoRWF2_NWVnjWM_dA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - Pend. Pancasila</span>
+                <span class="time-duration">09.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfoHwdhgo-tBL2pum_4288ld0J-IFSnQ_a0aktZRhcAmxr1_A/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - IPA</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSdcV4scfONNxxSxmGCXtunLn72oa3Xht34SF57pzo7WRMNFbA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - Pend. Pancasila</span>
+                <span class="time-duration">12.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-03T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfOdtNv0Awqv4n4eV9yopQNLGDOBwKZUtaham95mePDhRsRGQ/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+
+    <div class="day-group">
+        <h2 class="day-title">Kamis, 4 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - B. Inggris</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSd30g-JedAyrnojfKV9oT8QYMilUBql9NVGudrtcU7dgZxA1A/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - IPS</span>
+                <span class="time-duration">09.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T09:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLScb8ssnko3R9wzdv4MzZHp_8_l378hCDOEENkpKzNeImbVcDA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - B. Inggris</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSfZF4kauTXPsK9ZcN6NtkBQpfgihBjL4nZktjZSbItG5zGNmA/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - IPS</span>
+                <span class="time-duration">12.15 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-04T12:15:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSc95BHzNvlqeBw5GtIH7IEu-4HKbgw9F8gMwUr7E7-c24SrjA/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+
+    <div class="day-group">
+        <h2 class="day-title">Jumat, 5 Juni 2026</h2>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 7 - Matematika</span>
+                <span class="time-duration">07.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-05T07:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSedBz_T2DPpzQ7kGVJrYI16F-4Q2yPhGw_niUxV7Vf4csvtYQ/viewform">Belum Waktunya</a>
+        </div>
+        <div class="exam-card">
+            <div class="info">
+                <span class="class-subject">Kelas 8 - Matematika</span>
+                <span class="time-duration">10.45 WITA (80 Menit)</span>
+            </div>
+            <a href="#" class="b-start b-ujian kunci" data-time="2026-06-05T10:45:00" data-link="https://docs.google.com/forms/d/e/1FAIpQLSeGpqnvQQSiUg0vsMe94FssTq3HiO1KpblMIk5p-6m-N26mWg/viewform">Belum Waktunya</a>
+        </div>
+    </div>
+    
+    <footer>&copy; 2026 SMPN 4 Tanjung</footer>
+</main>
+
+<script>
+function cekWaktuUjian() {
+    const waktuSekarang = new Date(); 
+    const tombolUjian = document.querySelectorAll('.b-ujian');
+    const durasiUjian = 80 * 60 * 1000; 
+
+    tombolUjian.forEach(tombol => {
+        const waktuMulai = new Date(tombol.getAttribute('data-time'));
+        const waktuSelesai = new Date(waktuMulai.getTime() + durasiUjian);
+        const tautanForm = tombol.getAttribute('data-link');
+
+        if (waktuSekarang < waktuMulai) {
+            tombol.removeAttribute('href');
+            tombol.className = 'b-start b-ujian kunci';
+            tombol.innerHTML = 'Belum Waktunya';
+        } 
+        else if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
+            tombol.href = tautanForm;
+            tombol.className = 'b-start b-ujian'; 
+            tombol.innerHTML = 'Mulai Ujian';
+            tombol.setAttribute('target', '_blank'); 
+        } 
+        else {
+            tombol.removeAttribute('href');
+            tombol.className = 'b-start b-ujian habis'; 
+            tombol.innerHTML = 'Waktu Habis';
+        }
+    });
+}
+
+cekWaktuUjian();
+setInterval(cekWaktuUjian, 10000);
+</script>
+
+</body>
+</html>
