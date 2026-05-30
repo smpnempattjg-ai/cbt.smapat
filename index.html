@@ -2,112 +2,250 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Portal Aplikasi - SMPN 4 Tanjung</title>
-    <meta name="description" content="Portal aplikasi ringan untuk akses cepat via mobile">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Alternatif - Ujian Berbasis Web</title>
     <style>
-        /* CSS Internal: Menghindari browser men-download file CSS terpisah (menghemat request) */
-        :root {
-            --primary: #0056b3;
-            --bg: #f4f7f6;
-            --text: #333;
+        /* Reset CSS */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background-color: #f4f6f9;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            /* Menggunakan font bawaan sistem HP (tanpa download Google Fonts) */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            padding: 1rem;
+
+        /* --- HALAMAN PERATURAN (INTRO) --- */
+        #intro-page {
             display: flex;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ecf0f1;
+            z-index: 10;
         }
-
-        .container {
-            width: 100%;
-            max-width: 480px; /* Membatasi lebar maksimal seukuran HP pada umumnya */
-            background: #fff;
-            padding: 2rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .intro-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+        .intro-box h2 {
+            color: #2c3e50;
             text-align: center;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 15px;
         }
-
-        .logo {
-            width: 90px;
-            height: auto;
-            margin-bottom: 1rem;
+        .intro-box ul {
+            font-size: 16px;
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 30px;
         }
-
-        h1 { 
-            font-size: 1.4rem; 
-            margin-bottom: 0.3rem; 
-        }
-
-        p { 
-            font-size: 0.9rem; 
-            color: #666; 
-            margin-bottom: 2rem; 
-        }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: opacity 0.2s;
-            /* Memastikan tombol nyaman ditekan dengan jari (touch target) */
-            touch-action: manipulation;
-        }
-
-        .btn:active { opacity: 0.8; }
+        .intro-box li { margin-bottom: 10px; }
+        .highlight { font-weight: bold; color: #e74c3c; }
         
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+        #btn-start {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        #btn-start:hover { background-color: #2ecc71; }
+
+        /* --- HALAMAN UJIAN (Disembunyikan di awal) --- */
+        #header {
+            display: none; /* Disembunyikan sampai tombol diklik */
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            height: 60px;
+            box-sizing: border-box;
+        }
+        .title { font-size: 18px; font-weight: bold; }
+        .timer-box { font-size: 20px; font-weight: bold; background: #e74c3c; padding: 5px 15px; border-radius: 5px; }
+        .warning-box { font-size: 16px; font-weight: bold; color: #f1c40f; }
+
+        #iframe-container {
+            display: none; /* Disembunyikan sampai tombol diklik */
+            height: calc(100vh - 60px);
+            width: 100%;
+            background-color: white;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
-        footer {
-            margin-top: 2.5rem;
-            font-size: 0.8rem;
-            color: #888;
+        /* --- LAYAR BLOKIR --- */
+        #overlay-block {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
+        #overlay-block h1 { color: #e74c3c; font-size: 3rem; margin-bottom: 10px; }
+        #overlay-block p { font-size: 1.2rem; max-width: 600px; }
     </style>
 </head>
 <body>
 
-<main class="container">
-    <img src="Logo Sekolah (1).jpg" alt="Logo SMPN 4 Tanjung" class="logo" loading="lazy">
-
-    <h1>Portal Layanan Terpadu</h1>
-    <p>Akses cepat administrasi dan akademik.</p>
-
-    <div class="btn-group">
-        <a href="#" class="btn">Presensi Siswa & Guru</a>
-        <a href="#" class="btn">Ujian & Sumatif (STS)</a>
-        <a href="#" class="btn">Program RASS & ATS</a>
-        <a href="#" class="btn btn-outline">Pengumuman SPMB</a>
+    <!-- Halaman Peraturan Ujian -->
+    <div id="intro-page">
+        <div class="intro-box">
+            <h2>KETENTUAN UJIAN ONLINE</h2>
+            <ul>
+                <li>Ujian ini berlangsung selama <span class="highlight" id="teks-durasi">90</span> menit. Timer akan berjalan otomatis setelah tombol ditekan.</li>
+                <li>Sistem <span class="highlight">Anti-Cheat Aktif</span>. Dilarang berpindah tab browser, meminimalkan layar, atau membuka aplikasi lain.</li>
+                <li>Maksimal pelanggaran adalah <span class="highlight" id="teks-pelanggaran">3</span> kali. Lebih dari itu, ujian akan otomatis <strong>DIBLOKIR</strong>.</li>
+                <li>Fungsi <i>klik kanan</i> (Context Menu) dan <i>Keyboard Shortcuts</i> (Copy, Paste, dsb) telah dinonaktifkan.</li>
+                <li>Pastikan koneksi internet Anda stabil sebelum menekan tombol di bawah.</li>
+            </ul>
+            <button id="btn-start" onclick="mulaiUjian()">SAYA MENGERTI & MULAI UJIAN</button>
+        </div>
     </div>
 
-    <footer>
-        &copy; 2026 SMPN 4 Tanjung.<br>Akses Cepat Mobile.
-    </footer>
-</main>
+    <!-- Bagian Header Ujian -->
+    <div id="header">
+        <div class="title">UJIAN CBT ONLINE</div>
+        <div class="warning-box" id="warning-count">Pelanggaran: 0/3</div>
+        <div class="timer-box" id="timer-display">Waktu: 00:00:00</div>
+    </div>
 
+    <!-- Bagian Google Form -->
+    <div id="iframe-container">
+        <!-- GANTI URL DI BAWAH INI DENGAN LINK GOOGLE FORM ANDA -->
+        <iframe id="gform" src="https://docs.google.com/forms/d/e/1FAIpQLSe9rAmWkQIZKM7uPNITOv5L9eBBzVeBDP5jk5dLtSERWMsyPw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Memuat Ujian...</iframe>
+    </div>
+
+    <!-- Layar Pemblokiran -->
+    <div id="overlay-block">
+        <h1 id="block-title">UJIAN DIHENTIKAN</h1>
+        <p id="block-msg">Waktu Anda telah habis atau sistem mendeteksi aktivitas yang tidak diizinkan.</p>
+    </div>
+
+    <script>
+        // --- KONFIGURASI UTAMA ---
+        const durasiUjian = 90; // Atur durasi dalam menit
+        const batasPelanggaran = 3; // Maksimal pindah tab sebelum diblokir
+        
+        // Update teks di halaman intro sesuai konfigurasi
+        document.getElementById('teks-durasi').innerText = durasiUjian;
+        document.getElementById('teks-pelanggaran').innerText = batasPelanggaran;
+        document.getElementById('warning-count').innerText = `Pelanggaran: 0/${batasPelanggaran}`;
+
+        let waktuDetik = durasiUjian * 60;
+        let jumlahPelanggaran = 0;
+        let ujianAktif = false; // Status awal FALSE agar anti-cheat belum menyala di layar intro
+        let intervalTimer;
+
+        // --- FUNGSI MULAI UJIAN (Terpicu saat tombol diklik) ---
+        function mulaiUjian() {
+            // Sembunyikan intro, tampilkan antarmuka ujian
+            document.getElementById('intro-page').style.display = 'none';
+            document.getElementById('header').style.display = 'flex';
+            document.getElementById('iframe-container').style.display = 'block';
+            
+            ujianAktif = true; // Aktifkan sistem ujian
+            jalankanTimer();
+        }
+
+        // --- FITUR TIMER ---
+        function jalankanTimer() {
+            const timerElement = document.getElementById('timer-display');
+            
+            intervalTimer = setInterval(() => {
+                if (!ujianAktif) return;
+                
+                waktuDetik--;
+                
+                let jam = Math.floor(waktuDetik / 3600);
+                let menit = Math.floor((waktuDetik % 3600) / 60);
+                let detik = waktuDetik % 60;
+                
+                jam = jam < 10 ? '0' + jam : jam;
+                menit = menit < 10 ? '0' + menit : menit;
+                detik = detik < 10 ? '0' + detik : detik;
+                
+                timerElement.innerText = `Waktu: ${jam}:${menit}:${detik}`;
+                
+                if (waktuDetik <= 0) {
+                    clearInterval(intervalTimer);
+                    blokirUjian("WAKTU HABIS", "Waktu pengerjaan ujian Anda telah selesai. Silakan hubungi pengawas.");
+                }
+            }, 1000);
+        }
+
+        // --- FITUR ANTI-CHEAT ---
+        // A. Deteksi Pindah Tab (Hanya menghitung jika 'ujianAktif' bernilai true)
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === 'hidden' && ujianAktif) {
+                tindakPelanggaran();
+            }
+        });
+
+        // B. Mematikan Klik Kanan
+        document.addEventListener('contextmenu', (e) => {
+            if (ujianAktif) {
+                e.preventDefault();
+                alert("Fitur klik kanan dinonaktifkan selama ujian!");
+            }
+        });
+
+        // C. Mematikan Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (ujianAktif) {
+                if (e.key === "F12" || 
+                   (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j")) || 
+                   (e.ctrlKey && (e.key === "U" || e.key === "u" || e.key === "C" || e.key === "c" || e.key === "V" || e.key === "v"))) {
+                    e.preventDefault();
+                    alert("Shortcut dilarang saat ujian!");
+                }
+            }
+        });
+
+        // Fungsi Menangani Pelanggaran
+        function tindakPelanggaran() {
+            jumlahPelanggaran++;
+            document.getElementById('warning-count').innerText = `Pelanggaran: ${jumlahPelanggaran}/${batasPelanggaran}`;
+            
+            if (jumlahPelanggaran >= batasPelanggaran) {
+                blokirUjian("UJIAN DIBLOKIR", "Anda terdeteksi terlalu sering keluar dari halaman ujian. Akses ditutup.");
+            } else {
+                alert(`PERINGATAN ${jumlahPelanggaran} DARI ${batasPelanggaran}!\nAnda terdeteksi meninggalkan halaman ujian. Jangan pindah tab atau membuka aplikasi lain!`);
+            }
+        }
+
+        // Fungsi Memblokir Ujian
+        function blokirUjian(judul, pesan) {
+            ujianAktif = false;
+            document.getElementById('header').style.display = 'none';
+            document.getElementById('iframe-container').style.display = 'none';
+            document.getElementById('overlay-block').style.display = 'flex';
+            document.getElementById('block-title').innerText = judul;
+            document.getElementById('block-msg').innerText = pesan;
+        }
+    </script>
 </body>
 </html>
