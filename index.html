@@ -5,13 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <title>Portal Ujian - SMPN 4 Tanjung</title>
 <style>
-/* CSS Super Ringkas & Mobile First */
+/* CSS Super Ringkas Tanpa Logo */
 :root{--p:#0056b3;--bg:#f4f7f6;--t:#333}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--t);padding:1rem;display:flex;justify-content:center;line-height:1.4}
 .c{width:100%;max-width:480px;background:#fff;padding:1.5rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);text-align:center}
-.l{width:55px;height:auto;margin-bottom:.8rem}
-h1{font-size:1.2rem;margin-bottom:.2rem}
+h1{font-size:1.4rem;margin-bottom:.2rem;color:var(--p)} /* Ukuran judul sedikit dibesarkan sebagai ganti logo */
 p{font-size:.85rem;color:#666;margin-bottom:1.5rem}
 
 .hari{font-weight:700;text-align:left;margin:20px 0 10px;border-bottom:2px solid var(--p);padding-bottom:5px;color:var(--p);font-size:1rem}
@@ -19,11 +18,10 @@ p{font-size:.85rem;color:#666;margin-bottom:1.5rem}
 .info{font-size:.85rem;line-height:1.3;flex:1}
 .info strong{display:block;color:#000;margin-bottom:3px}
 
-/* Gaya Tombol Ujian */
 .b-ujian{font-size:.85rem;padding:8px 15px;border-radius:6px;background:var(--p);color:#fff;text-decoration:none;text-align:center;font-weight:600;white-space:nowrap;touch-action:manipulation;transition:opacity .2s}
 .b-ujian:active{opacity:.8}
-.b-ujian.kunci{background:#b0bec5;pointer-events:none;color:#fff} /* Warna abu-abu (Belum mulai) */
-.b-ujian.habis{background:#dc3545;pointer-events:none;color:#fff} /* Warna merah (Waktu habis) */
+.b-ujian.kunci{background:#b0bec5;pointer-events:none;color:#fff} 
+.b-ujian.habis{background:#dc3545;pointer-events:none;color:#fff} 
 
 footer{margin-top:2.5rem;font-size:.75rem;color:#888}
 </style>
@@ -31,7 +29,6 @@ footer{margin-top:2.5rem;font-size:.75rem;color:#888}
 <body>
 
 <main class="c">
-        
     <h1>Portal Ujian STS</h1>
     <p>Pilih mata pelajaran sesuai jadwal</p>
     
@@ -104,33 +101,25 @@ footer{margin-top:2.5rem;font-size:.75rem;color:#888}
 
 <script>
 function cekWaktuUjian() {
-    const waktuSekarang = new Date(); // Waktu saat ini di HP siswa
+    const waktuSekarang = new Date(); 
     const tombolUjian = document.querySelectorAll('.b-ujian');
-
-    // Menetapkan durasi ujian: 80 menit (dalam format milidetik)
-    // 80 menit * 60 detik * 1000 milidetik = 4.800.000
     const durasiUjian = 80 * 60 * 1000; 
 
     tombolUjian.forEach(tombol => {
-        // Mengambil waktu mulai dari atribut HTML
         const waktuMulai = new Date(tombol.getAttribute('data-time'));
-        // Menghitung waktu selesai (waktu mulai + 80 menit)
         const waktuSelesai = new Date(waktuMulai.getTime() + durasiUjian);
         const tautanForm = tombol.getAttribute('data-link');
 
-        // KONDISI 1: Jika waktu sekarang belum mencapai waktu mulai
         if (waktuSekarang < waktuMulai) {
             tombol.removeAttribute('href');
             tombol.className = 'b-ujian kunci';
             tombol.innerHTML = 'Belum Waktunya';
         } 
-        // KONDISI 2: Jika berada di rentang waktu ujian (Sedang berlangsung)
         else if (waktuSekarang >= waktuMulai && waktuSekarang <= waktuSelesai) {
             tombol.href = tautanForm;
             tombol.className = 'b-ujian'; 
             tombol.innerHTML = 'Mulai';
         } 
-        // KONDISI 3: Jika waktu sudah melewati batas waktu ujian
         else {
             tombol.removeAttribute('href');
             tombol.className = 'b-ujian habis'; 
@@ -139,12 +128,5 @@ function cekWaktuUjian() {
     });
 }
 
-// Menjalankan pengecekan pertama kali
 cekWaktuUjian();
-
-// Mengulang pengecekan setiap 10 detik secara otomatis di latar belakang
-setInterval(cekWaktuUjian, 10000);
-</script>
-
-</body>
-</html>
+setInterval(cekWaktuUjian, 1000
